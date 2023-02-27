@@ -1,9 +1,12 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { useSelector, useDispatch } from "react-redux";
+import { incNumber } from "../redux/actions";
+import { decNumber } from "../redux/actions";
 
 function Testing() {
   const myState = useSelector((state) => state.changeNumber);
+  const dispatch = useDispatch();
   const { isLoading, error, data } = useQuery("gitdata", () =>
     fetch("https://api.github.com/repos/tannerlinsley/react-query").then(
       (res) => res.json()
@@ -16,9 +19,9 @@ function Testing() {
     <div>
       <h1>{data.name}</h1>
       <h3>{data.description}</h3>
-      <button>-</button>
+      <button onClick={() => dispatch(decNumber())}>-</button>
       <span>{myState}</span>
-      <button>+</button>
+      <button onClick={() => dispatch(incNumber())}>+</button>
     </div>
   );
 }
